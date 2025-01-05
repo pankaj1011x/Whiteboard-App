@@ -19,6 +19,8 @@ model User{
   email String  @unique
   password String 
   drawing Drawing[]
+  token PasswordResetToken[]
+
 }
 
 
@@ -27,4 +29,13 @@ model Drawing{
   content String 
   userId  String
   user    User    @relation(fields: [userId], references: [id])
+}
+
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  expiresAt DateTime
 }
